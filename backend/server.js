@@ -11,7 +11,9 @@ app.use(bodyParser.json());
 
 //Sets up a route for task-related API requests (/api/tasks).
 const taskRoutes = require('./routes/tasks');
+const emissionsRoutes = require('./routes/emissions');
 app.use('/api/tasks', taskRoutes);
+app.use('/api', emissionsRoutes);
 
 //Connects to MongoDB using Mongoose
 mongoose.connect('mongodb://localhost:27017/ecoquest', {
@@ -23,13 +25,6 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB');
-});
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../frontend/ecoquest/dist')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/ecoquest/dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
