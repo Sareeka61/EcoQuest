@@ -1,31 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const UserInfo = () => {
   // Array of milestone values and labels
   const milestones = [200, 300, 400, 500, 600];
-  
-  // Sample activities with points assigned
-  const initialActivities = [
-    { id: 1, title: 'Talk about climate change', points: 20 },
-    { id: 2, title: 'Use paper straw', points: 10 },
-    { id: 3, title: 'Use public vehicle today', points: 30 },
-    { id: 4, title: 'Switch to LED Bulbs', points: 40 },
-    { id: 5, title: 'Recycle Household Waste', points: 25 }
-  ];
 
-  const [activities, setActivities] = useState(initialActivities);
+  // Initial states
+  const [activities, setActivities] = useState([]);
   const [completedActivities, setCompletedActivities] = useState(new Set());
   const [totalPoints, setTotalPoints] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const handleMarkAsDone = (id, points) => {
-    setActivities(prev => prev.filter(activity => activity.id !== id));
-    setCompletedActivities(prev => new Set(prev).add(id));
-    setTotalPoints(prev => prev + points);
+  useEffect(() => {
+    fetchRandomTask();
+  }, []);
+
+  const fetchRandomTask = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:5000/api/tasks/random');
+      if (response.data) {
+        setActivities([response.data]);
+      } else {
+        setActivities([]);
+      }
+    } catch (error) {
+      console.error('Error fetching task:', error);
+      setActivities([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSkip = (id) => {
-    setActivities(prev => prev.filter(activity => activity.id !== id));
-    setCompletedActivities(prev => new Set(prev).delete(id));
+  const handleMarkAsDone = async (id, points) => {
+    try {
+      await axios.post('http://localhost:5000/api/tasks/complete', { id });
+      setActivities((prev) => prev.filter((activity) => activity._id !== id));
+      setCompletedActivities((prev) => new Set(prev).add(id));
+      setTotalPoints((prev) => prev + points);
+      fetchRandomTask();
+    } catch (error) {
+      console.error('Error marking task as done:', error);
+    }
+  };
+
+  const handleSkip = async (id) => {
+    try {
+      await axios.post('http://localhost:5000/api/tasks/skip', { id });
+      setActivities((prev) => prev.filter((activity) => activity._id !== id));
+      fetchRandomTask();
+    } catch (error) {
+      console.error('Error skipping task:', error);
+    }
   };
 
   const progressWidth = Math.min((totalPoints / milestones[milestones.length - 1]) * 100, 100);
@@ -44,7 +70,6 @@ const UserInfo = () => {
             {milestones.map((milestone, index) => (
               <span key={index} className="flex flex-col items-center">
                 <span>{milestone}</span>
-                {/* Add creative labels here */}
                 <span className="text-xs">Label {index + 1}</span>
               </span>
             ))}
@@ -54,34 +79,42 @@ const UserInfo = () => {
         {/* Activities Card */}
         <div className="bg-white rounded-lg shadow-lg p-6 w-full md:w-2/3 h-full overflow-y-auto">
           <h2 className="text-xl font-bold mb-4 text-gray-800">Activities</h2>
-          <div className="space-y-4">
-            {activities.map(activity => (
-              <div
-                key={activity.id}
-                className={`bg-gray-50 p-4 rounded-lg shadow-md ${completedActivities.has(activity.id) ? 'border-green-500 border-2' : ''}`}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-medium">{activity.title}</span>
-                  <span className="text-sm text-gray-500">({activity.points} pts)</span>
-                  <div className="flex space-x-2">
-                    <button
-                      className="bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600"
-                      onClick={() => handleMarkAsDone(activity.id, activity.points)}
-                      disabled={completedActivities.has(activity.id)}
-                    >
-                      Done
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
-                      onClick={() => handleSkip(activity.id)}
-                    >
-                      Skip
-                    </button>
+          {loading ? (
+            <p>Loading...</p>
+          ) : activities.length > 0 ? (
+            <div className="space-y-4">
+              {activities.map((activity) => (
+                activity && (
+                  <div
+                    key={activity._id}
+                    className={`bg-gray-50 p-4 rounded-lg shadow-md ${completedActivities.has(activity._id) ? 'border-green-500 border-2' : ''}`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-medium">{activity.name}</span>
+                      <span className="text-sm text-gray-500">({activity.environmentalImpact} pts)</span>
+                      <div className="flex space-x-2">
+                        <button
+                          className="bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600"
+                          onClick={() => handleMarkAsDone(activity._id, activity.environmentalImpact)} // Assuming 'environmentalImpact' is points
+                          disabled={completedActivities.has(activity._id)}
+                        >
+                          Done
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
+                          onClick={() => handleSkip(activity._id)}
+                        >
+                          Skip
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                )
+              ))}
+            </div>
+          ) : (
+            <p>No tasks available</p>
+          )}
         </div>
       </div>
     </div>
