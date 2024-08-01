@@ -28,7 +28,6 @@ router.get('/random', async (req, res) => {
 // Route to mark a task as complete
 router.post('/complete', async (req, res) => {
   const { taskId } = req.body;
-  console.log(`Received taskId: ${taskId}`);
   try {
       const task = await Task.findById(taskId);
       if (!task) {
