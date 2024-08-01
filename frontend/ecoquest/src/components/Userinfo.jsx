@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import UserInputForm from './UserInputForm'; // Import the UserInputForm component
 
 const UserInfo = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   // Array of milestone values and labels
   const milestones = [200, 300, 400, 500, 600];
   
@@ -37,10 +40,14 @@ const UserInfo = () => {
     100
   );
 
+  const handleCalculate = (inputs) => {
+    console.log(inputs); // Handle form inputs and calculations here
+    setIsFormOpen(false); // Close the dialog after handling
+  };
+
   return (
     <div className="w-4/5 ml-[360px] mt-16 p-8 bg-gray-100 h-screen overflow-y-auto">
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-
         <div className="flex flex-col space-y-4 md:w-1/3">
           {/* Card for Points */}
           <div className="bg-white rounded-lg shadow-lg p-6 h-44">
@@ -68,10 +75,12 @@ const UserInfo = () => {
           <div className="bg-white rounded-lg shadow-lg p-6 h-44">
             <h2 className="text-xl font-bold mb-4 text-gray-800">Your Entry</h2>
             <p className='text-slate-500'>Enter your emission records here...</p>
-            <button className="bg-primary text-white pt-2 pb-2 pl-4 pr-4 rounded-md font-bold border border-transparent hover:border-primary hover:bg-white mt-4 hover:text-primary">
-  Your Emissions
-</button>
-
+            <button
+              className="bg-primary text-white pt-2 pb-2 pl-4 pr-4 rounded-md font-bold border border-transparent hover:border-primary hover:bg-white mt-4 hover:text-primary"
+              onClick={() => setIsFormOpen(true)} // Open the dialog
+            >
+              Your Emissions
+            </button>
           </div>
         </div>
 
@@ -116,6 +125,34 @@ const UserInfo = () => {
           </div>
         </div>
       </div>
+
+      {/* Dialog for User Input Form */}
+      {isFormOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-8 w-/5 md:w-1/2 lg:w-1/3">
+            <UserInputForm onCalculate={handleCalculate} />
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              onClick={() => setIsFormOpen(false)}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
