@@ -10,7 +10,7 @@ const UserInfo = () => {
   const [completedActivities, setCompletedActivities] = useState(new Set());
   const [totalPoints, setTotalPoints] = useState(0);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     fetchRandomTask();
   }, []);
@@ -32,22 +32,22 @@ const UserInfo = () => {
     }
   };
 
-  const handleMarkAsDone = async (id, points) => {
+  const handleMarkAsDone = async (taskId, points) => {
     try {
-      await axios.post('http://localhost:5000/api/tasks/complete', { id });
-      setActivities((prev) => prev.filter((activity) => activity._id !== id));
-      setCompletedActivities((prev) => new Set(prev).add(id));
+      const response = await axios.post('http://localhost:5000/api/tasks/complete', { taskId });
       setTotalPoints((prev) => prev + points);
+      setActivities((prev) => prev.filter((activity) => activity._id !== taskId));
+      setCompletedActivities((prev) => new Set(prev).add(taskId));
       fetchRandomTask();
     } catch (error) {
       console.error('Error marking task as done:', error);
     }
   };
 
-  const handleSkip = async (id) => {
+  const handleSkip = async (taskId) => {
     try {
-      await axios.post('http://localhost:5000/api/tasks/skip', { id });
-      setActivities((prev) => prev.filter((activity) => activity._id !== id));
+      await axios.post('http://localhost:5000/api/tasks/skip', { taskId });
+      setActivities((prev) => prev.filter((activity) => activity._id !== taskId));
       fetchRandomTask();
     } catch (error) {
       console.error('Error skipping task:', error);
@@ -95,7 +95,7 @@ const UserInfo = () => {
                       <div className="flex space-x-2">
                         <button
                           className="bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600"
-                          onClick={() => handleMarkAsDone(activity._id, activity.totalPoints)} // Assuming 'environmentalImpact' is points
+                          onClick={() => handleMarkAsDone(activity._id, activity.totalPoints)}
                           disabled={completedActivities.has(activity._id)}
                         >
                           Done

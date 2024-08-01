@@ -20,23 +20,50 @@ router.get('/random', async (req, res) => {
           res.status(404).json({ message: 'No tasks found' });
       }
   } catch (error) {
+      console.error('Error fetching random task:', error);
       res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-// POST: Mark a task as completed
+// Route to mark a task as complete
 router.post('/complete', async (req, res) => {
-  // Implement the logic to handle task completion, including saving evidence and granting points
-  // For example:
-  // const { userId, taskId, evidenceUrl } = req.body;
-  // Save the evidence and update user's points based on the taskId
-  res.status(200).json({ message: 'Task completed' });
+  const { taskId } = req.body;
+  console.log(`Received taskId: ${taskId}`);
+  try {
+      const task = await Task.findById(taskId);
+      if (!task) {
+          console.error('Task not found');
+          return res.status(404).json({ message: 'Task not found' });
+      }
+
+      // Here, we would update the task status to completed
+      task.completed = true;
+      await task.save();
+
+      res.json({ message: 'Task marked as complete' });
+  } catch (error) {
+      console.error('Error marking task as complete:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-// POST: Skip a task
-router.post('/skip', (req, res) => {
-  // Implement logic to skip a task
-  res.status(200).json({ message: 'Task skipped' });
+// Route to skip a task
+router.post('/skip', async (req, res) => {
+  const { taskId } = req.body;
+  console.log(`Received taskId: ${taskId}`);
+  try {
+      const task = await Task.findById(taskId);
+      if (!task) {
+          console.error('Task not found');
+          return res.status(404).json({ message: 'Task not found' });
+      }
+
+      // Here, we could update the task status to skipped or just inform the client
+      res.json({ message: 'Task skipped' });
+  } catch (error) {
+      console.error('Error skipping task:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 module.exports = router;
