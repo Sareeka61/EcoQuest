@@ -5,15 +5,16 @@ import Navbar from './components/Navbar'
 import Userinfo from './components/Userinfo'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <Navigation />
-      <Navbar />
-      <Userinfo/>
-      </>
-  )
+    <div>
+        <div>
+  <div class="col-span-4"><Navigation /></div>
+  <div class="col-span-8">    <Userinfo /></div>
+</div>
+  <Navbar />
+      </div>
+  );
 }
 
 export default App
