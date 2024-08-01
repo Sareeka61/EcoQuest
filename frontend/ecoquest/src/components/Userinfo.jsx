@@ -113,7 +113,7 @@ const UserInfo = () => {
             <p>Loading...</p>
           ) : activities.length > 0 ? (
             <div className="space-y-4">
-              {activities.map(((activity)) => (
+              {activities.map((activity) => (
                 activity && (
                   <div
                     key={activity._id}
