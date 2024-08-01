@@ -2,15 +2,25 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/Task');
 
-// GET: Fetch a random task
+// Define a function to calculate total points
+const calculatePoints = (task) => {
+  const { environmentalImpact, feasibility, frequency } = task;
+  return (environmentalImpact + feasibility) * frequency;
+};
+
+// Get a random task
 router.get('/random', async (req, res) => {
   try {
-    const count = await Task.countDocuments();
-    const random = Math.floor(Math.random() * count);
-    const task = await Task.findOne().skip(random);
-    res.status(200).json(task);
+      const tasks = await Task.aggregate([{ $sample: { size: 1 } }]);
+      if (tasks.length > 0) {
+          const task = tasks[0];
+          task.totalPoints = calculatePoints(task);
+          res.json(task);
+      } else {
+          res.status(404).json({ message: 'No tasks found' });
+      }
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch task' });
+      res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
