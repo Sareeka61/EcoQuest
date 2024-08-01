@@ -29,13 +29,27 @@ const CarbonEmissionCalculator = () => {
   const calculateEmissions = async () => {
     console.log("Calculating emissions with inputs:", inputs);
     try {
-      const response = await axios.post('http://localhost:5000/api/calculate-emissions', inputs);
+      const response = await axios.post('http://localhost:5000/api/emissions/calculate', inputs);
       console.log("Response from backend:", response.data);
       setTotalEmissions(response.data.totalEmissions);
     } catch (error) {
       console.error("Error calculating emissions:", error);
     }
   };
+
+  const addEmissionRecord = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/carbon-emissions/add', { ...inputs, totalEmissions });
+      console.log("Emission record added:", response.data);
+    } catch (error) {
+      console.error("Error adding emission record:", error);
+    }
+  };
+
+const handleCalculateAndAdd = async () => {
+  await calculateEmissions();
+  await addEmissionRecord();
+};
 
   return (
     <div>
