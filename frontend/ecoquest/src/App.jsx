@@ -3,6 +3,7 @@ import './App.css'
 import Navigation from './components/Navigation'
 import Navbar from './components/Navbar'
 import Userinfo from './components/Userinfo'
+import CarbonEmissionCalculator from './components/CarbonEmissionCalculator';
 
 function App() {
 
