@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //Defining a schema for tasks, specifying the structure and data types for each field.
-const taskSchema = new mongoose.Schema({
+const TaskSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   environmentalImpact: { type: Number, required: true }, // Scale 1-10

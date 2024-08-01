@@ -42,7 +42,8 @@ const UserInfo = () => {
 
   const handleCalculate = (inputs) => {
     console.log(inputs); // Handle form inputs and calculations here
-    setIsFormOpen(false); // Close the dialog after handling
+    setIsFormOpen(false); // Close the dialog after handling4    onSubmit(formData);
+    onSubmit(formData);
   };
 
   return (
@@ -77,9 +78,9 @@ const UserInfo = () => {
             <p className='text-slate-500'>Enter your emission records here...</p>
             <button
               className="bg-primary text-white pt-2 pb-2 pl-4 pr-4 rounded-md font-bold border border-transparent hover:border-primary hover:bg-white mt-4 hover:text-primary"
-              onClick={() => setIsFormOpen(true)} // Open the dialog
+              onClick={() => setIsFormOpen(true)} //opening form dialog here
             >
-              Your Emissions
+              Calculate Emissions
             </button>
           </div>
         </div>

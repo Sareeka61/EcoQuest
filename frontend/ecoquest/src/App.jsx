@@ -3,7 +3,7 @@ import './App.css'
 import Navigation from './components/Navigation'
 import Navbar from './components/Navbar'
 import Userinfo from './components/Userinfo'
-// import CarbonEmissionCalculator from './components/CarbonEmissionCalculator';
+import CarbonEmissionCalculator from './components/CarbonEmissionCalculator';
 // import UserInputForm from './components/UserInputForm'
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
   <Userinfo />
   <Navbar />
   {/* <UserInputForm/> */}
+  <CarbonEmissionCalculator/>
 </div>
   );
 }
