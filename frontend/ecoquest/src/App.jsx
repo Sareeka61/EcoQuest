@@ -1,20 +1,20 @@
 import { useState } from 'react'
 import './App.css'
 import Navigation from './components/Navigation'
+import Navbar from './components/Navbar'
+import Userinfo from './components/Userinfo'
 import CarbonEmissionCalculator from './components/CarbonEmissionCalculator';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-      <div className="Navigation">
-        <Navigation />
+    <div>
+        <div>
+  <div class="col-span-4"><Navigation /></div>
+  <div class="col-span-8">    <Userinfo /></div>
+</div>
+  <Navbar />
       </div>
-      <div className="Content">
-        <CarbonEmissionCalculator />
-      </div>
-    </div>
   );
 }
 
