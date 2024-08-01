@@ -8,6 +8,7 @@ import Userinfo from './components/Userinfo'
 
 function App() {
 
+const App = () => {
   return (
         <div>
  <Navigation />  
@@ -18,4 +19,4 @@ function App() {
   );
 }
 
-export default App
+}

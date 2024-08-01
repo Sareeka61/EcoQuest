@@ -1,11 +1,11 @@
 import React from 'react';
-import defaultProfile from '../assets/default-profile-image.png';
+import defaultProfile from '../assets/default-profile-image.jpg';
 
 const Navigation = () => {
   const username = "User";
 
   const handleLogout = () => {
-    // Logic for logging out
+    // Logic for logging out //
     console.log("Logged out");
   };
 
