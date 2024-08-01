@@ -6,8 +6,8 @@ import Userinfo from './components/Userinfo'
 // import CarbonEmissionCalculator from './components/CarbonEmissionCalculator';
 // import UserInputForm from './components/UserInputForm'
 
-function App() {
 
+const App = () => {
   return (
         <div>
  <Navigation />  
@@ -18,4 +18,5 @@ function App() {
   );
 }
 
-export default App
+
+export default App;
