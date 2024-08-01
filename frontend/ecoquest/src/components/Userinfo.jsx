@@ -91,11 +91,11 @@ const UserInfo = () => {
                   >
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-medium">{activity.name}</span>
-                      <span className="text-sm text-gray-500">({activity.environmentalImpact} pts)</span>
+                      <span className="text-sm text-gray-500">({activity.totalPoints} pts)</span>
                       <div className="flex space-x-2">
                         <button
                           className="bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600"
-                          onClick={() => handleMarkAsDone(activity._id, activity.environmentalImpact)} // Assuming 'environmentalImpact' is points
+                          onClick={() => handleMarkAsDone(activity._id, activity.totalPoints)} // Assuming 'environmentalImpact' is points
                           disabled={completedActivities.has(activity._id)}
                         >
                           Done
@@ -106,8 +106,9 @@ const UserInfo = () => {
                         >
                           Skip
                         </button>
-                      </div>
+                        </div>
                     </div>
+                    <p className="text-sm mt-2">{activity.description}</p>
                   </div>
                 )
               ))}
