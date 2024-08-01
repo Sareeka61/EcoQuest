@@ -1,5 +1,5 @@
 import React from 'react';
-import defaultProfile from '../assets/default-profile-image.png';
+import defaultProfile from '../assets/default-profile-image.jpg';
 
 const HorizontalNavbar = () => {
   const handleSignup = () => {
