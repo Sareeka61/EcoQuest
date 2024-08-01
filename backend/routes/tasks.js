@@ -1,14 +1,32 @@
-const express = require('express'); // Imports the Express module to create a router
-const router = express.Router(); // Creates an Express router instance
-const taskController = require('../controllers/taskController'); // Imports the task controller
+const express = require('express');
+const router = express.Router();
+const Task = require('../models/Task');
 
-// Route to get all tasks
-router.get('/', taskController.getTasks); 
+// GET: Fetch a random task
+router.get('/random', async (req, res) => {
+  try {
+    const count = await Task.countDocuments();
+    const random = Math.floor(Math.random() * count);
+    const task = await Task.findOne().skip(random);
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch task' });
+  }
+});
 
-// Route to create a new task
-router.post('/', taskController.createTask);
+// POST: Mark a task as completed
+router.post('/complete', async (req, res) => {
+  // Implement the logic to handle task completion, including saving evidence and granting points
+  // For example:
+  // const { userId, taskId, evidenceUrl } = req.body;
+  // Save the evidence and update user's points based on the taskId
+  res.status(200).json({ message: 'Task completed' });
+});
 
-// Route to mark a task as completed
-router.patch('/:id/complete', taskController.completeTask);
+// POST: Skip a task
+router.post('/skip', (req, res) => {
+  // Implement logic to skip a task
+  res.status(200).json({ message: 'Task skipped' });
+});
 
-module.exports = router; // Exports the router for use in the main server file
+module.exports = router;

@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 
 //Defining a schema for tasks, specifying the structure and data types for each field.
 const taskSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  points: Number,
-  completed: Boolean,
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  environmentalImpact: { type: Number, required: true }, // Scale 1-10
+  feasibility: { type: Number, required: true }, // Scale 1-10
+  frequency: { type: Number, required: true }, // Scale 1-10
+  effortAndCommitment: { type: Number, required: true }, // Scale 1-10
+  educationalValue: { type: Number, required: true }, // Scale 1-10
+  scalability: { type: Number, required: true } // Scale 1-10
 });
 
-//Creating a Mongoose model based on the defined schema, which allows for interaction with the tasks collection in MongoDB.
-const Task = mongoose.model('Task', taskSchema);
-
-module.exports = Task;
+module.exports = mongoose.model('Task', TaskSchema);

@@ -2,7 +2,6 @@ const express = require('express'); //creates an express server
 const mongoose = require('mongoose'); //connects to MongoDB
 const bodyParser = require('body-parser'); //parses JSON requests, works as middleware for req and res
 const cors = require('cors'); //enables Cross-Origin Resource Sharing
-const path = require('path');
 const app = express();
 
 //Creates an Express app instance and configures it to use cors and body-parser.
