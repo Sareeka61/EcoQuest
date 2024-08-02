@@ -18,7 +18,7 @@ app.use('/api/emissions', emissionsRoutes);
 //app.use('/api/carbon-emissions', carbonEmissionsRoutes);
 
 //Connects to MongoDB using Mongoose
-mongoose.connect('mongodb://localhost:27017/ecoquest', {
+mongoose.connect('mongodb://127.0.0.1:27017/ecoquest?directConnection=true', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

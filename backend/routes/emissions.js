@@ -16,14 +16,14 @@ const emissionFactors = {
   wasteGeneration: 0.23
 };
 
-router.post('/calculate', (req, res) => {
-  const inputs = req.body; //req.body contains the user inputs
-  const totalEmissions = Object.keys(inputs).reduce((acc, key) => {
-    const value = parseFloat(inputs[key]);
-    return acc + (isNaN(value) ? 0 : value * emissionFactors[key]);
-  }, 0);
-  res.json({ totalEmissions: totalEmissions.toFixed(2) });
-});
+// router.post('/calculate', (req, res) => {
+//   const inputs = req.body; //req.body contains the user inputs
+//   const totalEmissions = Object.keys(inputs).reduce((acc, key) => {
+//     const value = parseFloat(inputs[key]);
+//     return acc + (isNaN(value) ? 0 : value * emissionFactors[key]);
+//   }, 0);
+//   res.json({ totalEmissions: totalEmissions.toFixed(2) });
+// });
 
 // POST: Add a new carbon emission record
 router.post('/add', async (req, res) => {

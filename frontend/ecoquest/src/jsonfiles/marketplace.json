@@ -1,0 +1,31 @@
+[
+    {
+      "id": "1",
+      "name": "EcoNepal Store",
+      "description": "EcoNepal Store offers a wide range of sustainable products including bamboo toothbrushes, reusable bags, and eco-friendly home essentials.",
+      "image": "https://example.com/images/eco-nepal-store.jpg",
+      "link": "https://www.econepalstore.com"
+    },
+    {
+      "id": "2",
+      "name": "Green Earth Shop",
+      "description": "Green Earth Shop promotes climate-friendly products like organic clothing, recycled paper goods, and green beauty products.",
+      "image": "https://example.com/images/green-earth-shop.jpg",
+      "link": "https://www.instagram.com/greenearthshop"
+    },
+    {
+      "id": "3",
+      "name": "Sustainable Nepal",
+      "description": "Sustainable Nepal provides eco-conscious products such as solar-powered gadgets, organic food, and eco-friendly packaging solutions.",
+      "image": "https://example.com/images/sustainable-nepal.jpg",
+      "link": "https://www.sustainablenepal.com"
+    },
+    {
+      "id": "4",
+      "name": "Earth Friendly Goods",
+      "description": "Earth Friendly Goods focuses on offering products that help reduce waste, including biodegradable items and sustainable kitchenware.",
+      "image": "https://example.com/images/earth-friendly-goods.jpg",
+      "link": "https://www.instagram.com/earthfriendlygoods"
+    }
+  ]
+  
