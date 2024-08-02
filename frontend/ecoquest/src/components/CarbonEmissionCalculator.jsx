@@ -1,71 +1,59 @@
-import React, { useState } from 'react';
+import conversionMappings from '../jsonfiles/Conversion_Mapping.json';
 import axios from 'axios';
 
-const CarbonEmissionCalculator = () => {
-  const [inputs, setInputs] = useState({
-    electricity: '',
-    naturalGas: '',
-    carTravel: '',
-    busTravel: '',
-    trainTravel: '',
-    shortFlights: '',
-    longFlights: '',
-    meatConsumption: '',
-    poultryConsumption: '',
-    vegetableConsumption: '',
-    wasteGeneration: ''
-  });
+const calculateEmissions = (inputs) => {
+  console.log("Conversion mappings:", conversionMappings);
+  console.log("Inputs:", inputs);
 
-  const [totalEmissions, setTotalEmissions] = useState(0);
+  if (!conversionMappings || !conversionMappings.conversionMappings) {
+    console.error("Conversion mappings are not defined.");
+    return { total: 0, mappedValues: {} };
+  }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
-  };
+  if (!inputs || typeof inputs !== 'object') {
+    console.error("Inputs are not defined or not an object.");
+    return { total: 0, mappedValues: {} };
+  }
 
-  const calculateEmissions = async () => {
-    console.log("Calculating emissions with inputs:", inputs);
-    try {
-      const response = await axios.post('http://localhost:5000/api/emissions/calculate', inputs);
-      console.log("Response from backend:", response.data);
-      setTotalEmissions(response.data.totalEmissions);
-    } catch (error) {
-      console.error("Error calculating emissions:", error);
+  const mappings = conversionMappings.conversionMappings;
+  let total = 0;
+  const mappedValues = {};
+
+  for (const [key, value] of Object.entries(inputs)) {
+    const categoryMapping = mappings[key];
+    if (categoryMapping) {
+      mappedValues[key] = categoryMapping[value] || 0;
+      total += mappedValues[key];
+    } else {
+      console.warn(`No mapping found for key: ${key}`);
+      mappedValues[key] = 0; // Default to 0 if no mapping is found
     }
-  };
+  }
 
-  const addEmissionRecord = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/api/carbon-emissions/add', { ...inputs, totalEmissions });
-      console.log("Emission record added:", response.data);
-    } catch (error) {
-      console.error("Error adding emission record:", error);
-    }
-  };
-
-const handleCalculateAndAdd = async () => {
-  await calculateEmissions();
-  await addEmissionRecord();
+  console.log("Total emissions calculated:", total);
+  console.log("Mapped values:", mappedValues);
+  return { total, mappedValues };
 };
 
-  return (
-    <div>
-      <h2>Carbon Emission Calculator</h2>
-      {Object.keys(inputs).map((key) => (
-        <div key={key}>
-          <label>
-            {key.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + key.replace(/([A-Z])/g, ' $1').slice(1)}:
-            <input type="number" name={key} value={inputs[key]} onChange={handleChange} />
-          </label>
-        </div>
-      ))}
-      <button onClick={calculateEmissions}>Calculate Emissions</button>
-      <h3>Total Emissions: {totalEmissions} kg CO2</h3>
-    </div>
-  );
+const addEmissionRecord = async (inputs, totalEmissions) => {
+  try {
+    const response = await axios.post('http://localhost:5000/api/emissions/add', { ...inputs, totalEmissions });
+    console.log("Emission record added:", response.data);
+  } catch (error) {
+    console.error("Error adding emission record:", error);
+  }
 };
 
-export default CarbonEmissionCalculator;
+const handleCalculateAndAdd = async (inputs) => {
+  const { total, mappedValues } = calculateEmissions(inputs); // Destructure total and mappedValues
+  console.log("Mapped Values:", mappedValues); // Log the mapped values
+
+  try {
+    const response = await addEmissionRecord(mappedValues, total);
+    console.log("Emission record added:", response);
+  } catch (error) {
+    console.error("Failed to add emission record:", error);
+  }
+};
+
+export default handleCalculateAndAdd;

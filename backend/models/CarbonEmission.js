@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const CarbonEmissionSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
+  userId: { type: String, required: false },
   date: { type: Date, default: Date.now },
   electricity: { type: Number, default: 0 }, // kWh
   naturalGas: { type: Number, default: 0 }, // cubic meters

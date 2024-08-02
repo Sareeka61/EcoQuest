@@ -1,5 +1,6 @@
 import React from 'react';
 import defaultProfile from '../assets/default-profile-image.jpg';
+import Link from '../components/Login';
 
 const HorizontalNavbar = () => {
   const handleSignup = () => {
@@ -18,12 +19,14 @@ const HorizontalNavbar = () => {
         <span className="ml-2 text-2xl font-bold">Logo</span>
       </div>
       <div className="flex items-center">
+      <Link to="/login">      
         <button
           onClick={handleSignup}
           className="bg-white hover:bg-slate-200 text-primary font-bold py-2 px-4 rounded mr-4 shadow-md hover:shadow-lg transition-shadow"
         >
           Signup
         </button>
+        </Link>
         <img
           src={defaultProfile}
           alt="Profile"

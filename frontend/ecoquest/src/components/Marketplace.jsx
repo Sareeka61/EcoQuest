@@ -1,5 +1,6 @@
 import React from 'react';
 import marketplace from '../jsonfiles/marketplace.json';
+
 const Marketplace = () => {
   return (
     <div className="w-full lg:w-4/5 ml-auto mt-16 p-8 bg-gray-100 h-screen overflow-y-auto no-scrollbar">
@@ -26,4 +27,5 @@ const Marketplace = () => {
     </div>
   );
 };
+
 export default Marketplace;
