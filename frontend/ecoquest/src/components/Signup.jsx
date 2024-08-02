@@ -1,9 +1,12 @@
+// src/components/Signup.jsx
 import React from 'react';
+
 const Signup = () => {
   const signup = (event) => {
     event.preventDefault();
     alert('Signup submitted!');
   };
+
   return (
     <div className="h-screen flex flex-col md:flex-row">
       <div className="flex-1 bg-gray-200 text-teal-800 font-bold flex flex-col justify-center items-center p-6">
@@ -11,6 +14,7 @@ const Signup = () => {
         <span className="text-lg md:text-xl mt-4">
 Track, Act and Transform Your World        </span>
       </div>
+
       <div className="flex-1 bg-teal-800 text-white flex flex-col justify-center items-center p-6">
         <h1 className="text-3xl font-bold">Create an account</h1>
         <form
@@ -63,10 +67,5 @@ Track, Act and Transform Your World        </span>
     </div>
   );
 };
+
 export default Signup;
-
-
-
-
-
-
