@@ -11,11 +11,9 @@ app.use(bodyParser.json());
 //Sets up a route for task-related API requests (/api/tasks).
 const taskRoutes = require('./routes/tasks');
 const emissionsRoutes = require('./routes/emissions');
-//const carbonEmissionsRoutes = require('./routes/carbonEmissions');
 
 app.use('/api/tasks', taskRoutes);
 app.use('/api/emissions', emissionsRoutes);
-//app.use('/api/carbon-emissions', carbonEmissionsRoutes);
 
 //Connects to MongoDB using Mongoose
 mongoose.connect('mongodb://127.0.0.1:27017/ecoquest?directConnection=true', {
