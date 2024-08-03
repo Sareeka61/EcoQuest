@@ -1,14 +1,24 @@
 import React from 'react';
+
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 const generateInitialData = () => {
   const weeks = [];
   for (let i = 0; i < 52; i++) {
     weeks.push(new Array(7).fill(0));
   }
   weeks.push(new Array(1).fill(0));
+  
+  const augustStartWeek = 30;
+  weeks[augustStartWeek][4] = 2;
+  weeks[augustStartWeek][5] = 3;
+  weeks[augustStartWeek][6] = 2;
+  
   return weeks;
 };
+
 const contributionsData = generateInitialData();
+
 const getColor = (value, monthIndex) => {
   if (monthIndex === 11) return "bg-gray-200"; 
   if (value === 0) return "bg-gray-200";
@@ -17,6 +27,7 @@ const getColor = (value, monthIndex) => {
   if (value === 3) return "bg-green-500";
   return "bg-green-700";
 };
+
 const ContributionCalendar = ({ data = contributionsData }) => {
   return (
     <div className="overflow-auto p-4">
@@ -42,4 +53,5 @@ const ContributionCalendar = ({ data = contributionsData }) => {
     </div>
   );
 };
+
 export default ContributionCalendar;

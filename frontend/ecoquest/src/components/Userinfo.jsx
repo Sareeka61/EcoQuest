@@ -9,10 +9,8 @@ const UserInfo = () => {
 
   const sampleData = [200, 300, 400, 500, 600, 550, 600];
 
-  // Array of milestone values and labels
   const milestones = [200, 300, 500, 1000, 3000];
 
-  // Initial states
   const [activities, setActivities] = useState([]);
   const [completedActivities, setCompletedActivities] = useState(new Set());
   const [totalPoints, setTotalPoints] = useState(0);
@@ -69,8 +67,8 @@ const UserInfo = () => {
   );
 
   const handleCalculate = (inputs) => {
-    console.log(inputs); // Handle form inputs and calculations here
-    setIsFormOpen(false); // Close the dialog after handling
+    console.log(inputs);
+    setIsFormOpen(false);
     handleCalculateAndAdd(inputs);
   };
 
@@ -106,7 +104,7 @@ const UserInfo = () => {
             <p className='text-slate-500'>Enter your emission records here...</p>
             <button
               className="bg-primary text-white pt-2 pb-2 pl-4 pr-4 rounded-md font-bold border border-transparent hover:border-primary hover:bg-white mt-4 hover:text-primary"
-              onClick={() => setIsFormOpen(true)} // Opening form dialog here
+              onClick={() => setIsFormOpen(true)}
             >
               Calculate Emissions
             </button>
