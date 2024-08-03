@@ -4,7 +4,7 @@ import defaultProfile from '../assets/default-profile-image.jpg';
 
 
 const Navigation = () => {
-  const username = "User";
+  const username = "Subi";
 
   const handleLogout = () => {
     console.log("Logged out");
