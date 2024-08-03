@@ -27,7 +27,6 @@ const getColor = (value, monthIndex) => {
   if (value === 3) return "bg-green-500";
   return "bg-green-700";
 };
-
 const ContributionCalendar = ({ data = contributionsData }) => {
   return (
     <div className="overflow-auto p-4">
