@@ -52,7 +52,7 @@ const Profile = () => {
             alt="Profile"
             className="w-24 h-24 sm:w-32 sm:h-32 rounded-full mb-4"
           />
-          <h1 className="text-xl sm:text-2xl font-semibold">Subi Pokharel</h1>
+          <h1 className="text-xl sm:text-2xl font-semibold">Sarika Ghimire</h1>
           {userPoints !== null && (
             <p className="text-sm text-gray-500 mt-1">Total Points: {userPoints}</p>
           )}
